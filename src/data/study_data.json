@@ -1,0 +1,402 @@
+{
+  "units": [
+    {
+      "id": 1,
+      "title": "Introduction to Computer Vision",
+      "summary": "Basics of CV, relationship with Graphics, and core applications.",
+      "topics": [
+        {
+          "title": "Computer Vision vs Image Processing vs Graphics",
+          "content": "**Computer Vision** is the inverse of Computer Graphics. \n\n* **Computer Graphics**: Description (Model) -> Image. (Rendering)\n* **Computer Vision**: Image -> Description (Model). (Understanding)\n* **Image Processing**: Image -> Image. (Enhancement)",
+          "analogy": "Think of **Graphics** as a painter creating a portrait from a memory (Model -> Image). \nThink of **Vision** as a detective looking at a photo and deducing who the person is (Image -> Model).\nThink of **Image Processing** as a photo editor adjusting contrast or removing red-eye (Image -> Image).",
+          "examples": [
+            "Graphics: Pixar movies",
+            "Vision: Face ID unlock",
+            "Image Processing: Instagram filters"
+          ],
+          "diagram": "graph LR\n  A[Physical World] -->|Imaging| B(Image)\n  B -->|Computer Vision| C[Model/Description]\n  C -->|Computer Graphics| D(Synthetic Image)\n  B -->|Image Processing| E(Enhanced Image)\n  style B fill:#3b82f6,stroke:#1e40af,stroke-width:2px",
+          "extended_content": "To truly master this, understand the **Data Flow Direction**:\n\n1.  **Computer Graphics (Synthesis)**: Starts with a mathematical definition (vertices, textures, lighting) and calculates pixel colors. It's 'deterministic'. We know everything about the scene because we built it.\n\n2.  **Computer Vision (Analysis)**: Starts with the pixel colors and tries to guess the mathematical definition. It is 'probabilistic'. We have to deal with noise, occlusion, and ambiguity. It is much harder because information was lost during the image capture (3D -> 2D).\n\n3.  **Image Processing (Transformation)**: This is often a **pre-processing step** for Computer Vision. Before we can detect a face (Vision), we might need to brighten the image or remove grain (Processing)."
+        },
+        {
+          "title": "Applications of CV",
+          "content": "CV is used everywhere: Medical Imaging (MRI analysis), Surveillance (Tracking), Biometrics (Face recognition), Automotive (Self-driving cars).",
+          "analogy": "CV gives 'eyes' and a 'brain' to machines.",
+          "examples": [
+            "Tesla Autopilot",
+            "Google Lens",
+            "CT Scan Tumor Detection"
+          ],
+          "extended_content": "Let's dig deeper into **Autonomous Driving** as a prime example:\n*   **Lane Detection**: Using edge detection to find road markings.\n*   **Object Detection**: Using Neural Networks (YOLO) to find cars and pedestrians.\n*   **SLAM (Simultaneous Localization and Mapping)**: Building a map of the world while navigating it.\n\n**Medical Imaging**:\n*   Computer Vision doesn't just 'see' pictures; it can measure things invisible to humans, like exact tumor volume or blood flow changes from subtle color shifts."
+        },
+        {
+          "title": "Biometrics: Verification vs Recognition",
+          "content": "**Verification** (1:1): 'Am I who I claim to be?' Check against one specific record. \n**Recognition** (1:N): 'Who am I?' Search against the entire database.",
+          "analogy": "**Verification**: Unlocking your phone (It checks if YOU are the owner).\n**Recognition**: Police scanning a crowd to find ANY criminal in their database.",
+          "extended_content": "This distinction is crucial for security systems design:\n\n*   **Verification (1:1)** is **Fast** and **Accurate**. You only compare the live face to the one stored on the card/phone. The threshold can be set strictly.\n\n*   **Recognition (1:N)** is **Slow** and prone to **False Positives**. You compare the live face to 1,000,000 criminal records. If even 0.1% match by accident, that's 1000 false alarms! This requires much more complex algorithms to handle scale."
+        },
+        {
+          "title": "Levels of Vision",
+          "content": "**Low-Level**: Pixel processing (Edge detection, Smoothing). No understanding.\n**Mid-Level**: Grouping/Segmentation (Finding shapes, boundaries, regions).\n**High-Level**: Understanding/Semantics (Recognizing 'This is a Cat', 'The man is running').",
+          "analogy": "**Low**: Seeing lines and colors.\n**Mid**: Seeing shapes and objects.\n**High**: Knowing what the objects are and what they are doing.",
+          "examples": [
+            "Low: Canny Edge Detector",
+            "Mid: Image Segmentation",
+            "High: Image Captioning"
+          ],
+          "extended_content": "Think of it as the hierarchy of the brain:\n1.  **Retina (Low)**: Just fires when light hits it.\n2.  **Visual Cortex V1 (Mid)**: Detects oriented edges and motion.\n3.  **Temporal Lobe (High)**: Connects the visual input to memory ('That's my mother')."
+        },
+        {
+          "title": "Advanced Applications: Eigenfaces & Vehicle Vision",
+          "content": "**Eigenfaces**: Using PCA (Principal Component Analysis) to reduce a face to a set of weights. It views a face as a weighted sum of 'ghostly' templates.\n**Vehicle Vision**: using CV for lane departure warnings, sign recognition, and pedestrian tracking.",
+          "analogy": "**Eigenfaces**: Identifying a criminal sketch by saying 'He has nose #4, eyes #2, and chin #9'.",
+          "examples": [
+            "Eigenfaces: Old school Face Unlock",
+            "Vehicle: Mobileye systems"
+          ],
+          "extended_content": "**Eigenfaces (PCA)** was the first successful automated face recognition technique (1991).\n*   **Idea**: You don't match pixel-for-pixel. You calculate the 'Average Face'. Then you subtract it from your face. What's left (the difference) is projected onto a set of basis faces (Eigenvectors). \n*   **Result**: A massive $100 \\times 100$ pixel image is compressed into just 20-50 numbers."
+        }
+      ],
+      "pyqs": [
+        {
+          "id": "q1",
+          "question": "What do you understand by Computer Vision? Write its applications with examples.",
+          "marks": 4,
+          "answer": "Computer Vision is a complex interdisciplinary field of Artificial Intelligence that focuses on enabling computers to identify, process, and understand images from the real world. Just as human vision allows us to see and make sense of our surroundings, Computer Vision seeks to give machines the ability to 'see' and interpret visual data. It involves the automatic extraction, analysis, and understanding of useful information from a single image or a sequence of images (video).\n\nIn essence, it is the transformation of data from a still or video camera into either a decision or a new representation. All such transformations are done for achieving some particular goal. \n\n**Applications with Examples:**\n\n1.  **Healthcare and Medical Imaging**: This is one of the most vital applications. Computer Vision models can analyze X-rays, MRI scans, and CT scans to detect key features such as tumors, hairline fractures, or blocked arteries often with greater accuracy than human radiologists.\n\n2.  **Automotive and Autonomous Vehicles**: Self-driving cars (like Tesla) rely heavily on CV. They use cameras to interpret traffic signs, detect lane boundaries, recognize pedestrians, and track other vehicles in real-time to navigate safely without human intervention.\n\n3.  **Retail and Consumer Experience**: Amazon Go stores are a prime example. Cameras track what items customers take from shelves and automatically charge them, eliminating checkout lines. Additionally, augmented reality apps (like virtual makeup try-on) use CV to overlay digital items on a user’s face.\n\n4.  **Security and Surveillance**: Facial recognition technology is used in airports and high-security zones to verify identities against a database of known individuals, ensuring safety and access control.",
+          "type": "Short"
+        },
+        {
+          "id": "q2",
+          "question": "How computer vision is different from image processing and computer graphics?",
+          "marks": 4,
+          "answer": "Computer Vision, Image Processing, and Computer Graphics are three closely related but distinct fields dealing with visual information. The core difference lies in their input and output.\n\n**1. Computer Vision (Image -> Model/Information)**\nThe primary goal of Computer Vision is **understanding**. The input is an image (or video), and the output is a high-level description or a model of what is in the image. For example, if you feed a photo of a dog into a CV system, the output might be the text label 'Dog' or a bounding box around the animal. It tries to replicate human sight and comprehension.\n\n**2. Image Processing (Image -> Image)**\nImage processing involves manipulation of digital images. Here, both the input and the output are images. The goal is usually **enhancement** or **restoration**. For example, if you take a blurry photo, an image processing algorithm might apply a sharpening filter to produce a clearer version of the same photo. It does not necessarily 'understand' what looks good, it simply applies mathematical operations to pixel values to change their appearance.\n\n**3. Computer Graphics (Model -> Image)**\nComputer Graphics is essentially the reverse of Computer Vision. The input is a mathematical description or a 3D model (geometry, textures, lighting data), and the output is an image. This is what happens in video games or animated movies (like Pixar films). The computer calculates how light interacts with the virtual 3D objects to 'render' a 2D image for the screen.\n\n**Summary Analogy:**\n- **Graphics**: An artist painting a scene from their imagination (Idea to Picture).\n- **Vision**: A detective looking at a crime scene photo to figure out what happened (Picture to Idea).\n- **Image Processing**: A photo editor adjusting the brightness of a picture (Picture to Better Picture).",
+          "type": "Short"
+        },
+        {
+          "id": "q3",
+          "question": "With the use of pertinent examples, differentiate between verification and recognition in the context of biometrics.",
+          "marks": 4,
+          "answer": "**Biometric Identification** typically falls into two modes: Verification and Recognition.\n\n**1. Verification (1:1 Matching)**\n*   **Definition**: The system asks, 'Are you who you claim to be?'. It compares the captured biometric data (e.g., your fingerprint) with *one specific template* stored for that user.\n*   **Example**: Unlocking your iPhone with FaceID. You claim to be the owner. The phone checks if the face in front of it matches the *one* owner face it knows.\n\n**2. Recognition (1:N Matching)**\n*   **Definition**: The system asks, 'Who is this person?'. It compares the captured data against *all* templates in a large database to find a match.\n*   **Example**: Police surveillance. A camera scans a face in a crowd and checks it against a database of 10,000 known criminals to see if standard match occurs.\n\n**Key Difference**: Verification is **Fast** (one comparison) and usually more accurate. Recognition is **Slow** (N comparisons) and harder (more chance of false alarm).",
+          "type": "Short"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Image Formation Models",
+      "summary": "How 3D world becomes 2D image. Cameras trends and projections.",
+      "topics": [
+        {
+          "title": "Radiosity: Radiance, Irradiance, Brightness",
+          "content": "**Radiance**: Energy/light leaving a surface. \n**Irradiance**: Light falling onto a surface (the sensor). \n**Brightness**: How the human eye perceives the light.",
+          "analogy": "**Radiance**: The sun glowing. \n**Irradiance**: The sunlight hitting your face. \n**Brightness**: How bright you think it is (subjective).",
+          "examples": [
+            "Radiance is source power.",
+            "Irradiance determines pixel value."
+          ],
+          "extended_content": "**Physics of Light** (The fundamental chain):\n1.  **Source**: Light bulb emits energy (**Radiance**).\n2.  **Interaction**: Light hits an object (apple). Some is absorbed, some reflected.\n3.  **Travel**: Reflected light travels to the camera.\n4.  **Sensor**: Light hits the sensor chip (**Irradiance**).\n5.  **Perception**: The sensor converts it to electricity, and your brain/computer sees it as a pixel value (**Brightness**).\n\nKey Concept: **Brightness is subjective**. The same physical Irradiance can look 'bright' in a dark room and 'dim' in a sunny room due to adaptation (or camera auto-exposure)."
+        },
+        {
+          "title": "Projections: Orthographic vs Perspective",
+          "content": "**Perspective**: Parallel lines converge at a vanishing point. Objects get smaller as they get further away. (How eyes/cameras work).\n**Orthographic**: Parallel lines stay parallel. Size doesn't change with distance. (Used in engineering drawings).",
+          "analogy": "**Perspective**: Looking down a long train track (tracks meet at horizon).\n**Orthographic**: Looking at a blueprint map (buildings don't shrink).",
+          "examples": [
+            "Perspective: Selfie",
+            "Orthographic: SimCity game view"
+          ],
+          "extended_content": "Why does this matter?\n\n*   **Perspective Projection** is realistic. It involves dividing by Z (depth). $x = f(X/Z)$. This non-linearity makes math hard (we lose parallel lines, angles change).\n\n*   **Orthographic Projection** is a simplification. We assume $Z$ is constant (infinite). $x = X$. This keeps lines parallel. We use this when the camera is **Very Far Away** (e.g., Satellite imaging) because the perspective effect is negligible."
+        },
+        {
+          "title": "Camera Geometry: Calibration & Stereo",
+          "content": "**Calibration**: Finding the intrinsic (focal length, center) and extrinsic (position, rotation) parameters of the camera.\n**Stereo Vision**: Using two cameras to recover depth (Z) by triangulation, similar to human eyes.",
+          "analogy": "**Calibration**: Adjusting a sniper scope so the crosshair matches the bullet hole.\n**Stereo**: Creating 3D depth by closing one eye and then the other.",
+          "examples": [
+            "Calibration: Checkerboard pattern",
+            "Stereo: Xbox Kinect (v1)"
+          ],
+          "extended_content": "**Stereo Vision Formula (Disparity)**:\nIf you have two eyes separated by a baseline $B$, and an object shifts by $d$ pixels between the left and right view:\n$$ Z = \\frac{f \\cdot B}{d} $$\n*   **Small shift ($d$)** -> Object is Far away.\n*   **Big shift ($d$)** -> Object is Close.\nThis is how autonomous cars know how far away an obstacle is without using Lidar.",
+          "diagram": "flowchart LR\n  L[Left Eye] --Ray--> O[3D Point]\n  R[Right Eye] --Ray--> O\n  L <-->|Baseline B| R\n  style O fill:#f43f5e,stroke:#9f1239"
+        }
+      ],
+      "pyqs": [
+        {
+          "id": "q4",
+          "question": "Display the formation of the visuals as they happen between the frames, starting with (3D) world coordinates -> pixel coordinates (2D).",
+          "marks": 4,
+          "diagram": "flowchart TD\n  W[World Coords 3D] -->|Extrinsic Matrix R,T| C[Camera Coords 3D]\n  C -->|Projection| I[Image Plane 2D]\n  I -->|Intrinsic Matrix K| P[Pixel Coords 2D]\n  style W fill:#1e293b,stroke:#e2e8f0\n  style P fill:#3b82f6,stroke:#1d4ed8",
+          "answer": "The process of image formation is a geometric transformation that maps a point in the vivid 3D real world to a specific 2D pixel on your computer screen or camera sensor. This pipeline involves a series of coordinate changes, often represented by matrix multiplications.\n\n**Step 1: World Coordinates (3D)**\nWe start with the object in the real world. Its position is defined relative to a fixed point in the world (e.g., the corner of a room). Let's call a point $P_w = (X_w, Y_w, Z_w)$.\n\n**Step 2: Extrinsic Matrix (World -> Camera)**\nWe need to know where the point is relative to the *camera*, not the room. We apply a **Rotation (R)** and **Translation (T)** to move coordinates. This is the **Extrinsic Matrix**. \n$P_c = R \\cdot P_w + T$. Now we have $P_c = (X_c, Y_c, Z_c)$.\n\n**Step 3: Projection (Camera 3D -> Image Plane 2D)**\nNow we project this 3D point onto the 2D film/sensor of the camera. In a standard pinhole camera model, we divide by the depth ($Z_c$) to simulate objects getting smaller as they get further away.\n$x = f \\cdot (X_c / Z_c)$, $y = f \\cdot (Y_c / Z_c)$ (where $f$ is focal length).\n\n**Step 4: Intrinsic Matrix (Image Plane -> Pixel Coordinates)**\nFinally, we convert these physical metric units (like millimeters on the sensor) into integer pixel values (like row 400, column 600). This involves scaling by the pixel density and adding the optical center offset $(c_x, c_y)$.\n$u = \\alpha \\cdot x + c_x$\n$v = \\beta \\cdot y + c_y$\n\n**Result:**\nWe have successfully transformed a physical 3D point $(X_w, Y_w, Z_w)$ into a digital pixel $(u, v)$ on the screen.",
+          "type": "Short"
+        },
+        {
+          "id": "q16b",
+          "question": "Why is Computer Vision an ill-posed problem?",
+          "marks": 10,
+          "answer": "In mathematics and computer science, a problem is considered 'well-posed' if a solution exists, is unique, and changes continuously with initial conditions. Computer Vision, specifically the task of reconstructing 3D information from 2D images, is famously an **ill-posed problem**. Ideally, we want to know the exact shape and position of objects in the world (Inverse Optics), but we only have the flat images they produced.\n\n**The Core Issue: Dimensionality Loss**\nWhen a 3D world is projected onto a 2D image sensor, we lose the depth dimension ($Z$). This loss is irreversible without extra information. Mathematically, the projection is a many-to-one mapping. This means that infinite different 3D scenes could theoretically produce the exact same 2D image.\n\n**Examples of Ambiguity**:\n\n1.  **Size vs. Distance (The Ames Room Illusion)**: If you see a car in a photo that looks small, is it a tiny toy car close to the camera, or a full-sized real car far away? Without context (like a road or person next to it) or stereo vision, it is mathematically impossible to tell the difference from a single monocular image.\n\n2.  **Shape vs. Shading**: A dark patch on a surface could be a change in the surface color (paint), or it could be a shadow cast by another object. The camera just records 'dark pixels'. The computer has to guess whether it's a material change or a lighting change.\n\n3.  **Occlusion**: If a person is standing behind a desk, the camera only sees their upper half. The computer has no data about their legs. They could be standing, sitting, or hovering. The solution for 'what is the whole person doing' is not unique based on the visual data alone.\n\n**Making it Well-Posed**\nSince the raw problem is ill-posed, Computer Vision relies on **constraints** and **priors** to solve it:\n*   **Smoothness constraint**: We assume objects usually have smooth surfaces, not jagged random content.\n*   **Lighting priors**: We often assume light comes from above (like the sun), which helps resolve shading ambiguities.\n*   **Multiview Geometry**: Using two eyes (Stereo Vision) or moving the camera gives us two different views. We can triangulate points to recover the lost Depth ($Z$), converting the ill-posed problem into a solvable geometric one.",
+          "type": "Long"
+        },
+        {
+          "id": "q16a",
+          "question": "Give specific examples of how the statement 'The image that comes from the camera generally serves as the first image in scale space' applies to you.",
+          "marks": 10,
+          "answer": "This statement is fundamental to **Scale-Space Theory** in Computer Vision. It refers to how we represent and analyze structures at different sizes (scales).\n\n**Concept of Scale Space**\nReal-world objects exist at meaningful sizes. A tree branch is large; a leaf vein is small. If we want a computer to 'understand' an image, we sometimes need to look at the coarse details (the forest) and sometimes the fine details (the leaves).\n\n**The 'Stack' of Images**\nWe create a 'Scale Space' by taking the original image and progressively blurring it (using Gaussian kernels with increasing $\\sigma$).\n*   $L(x, y, 0)$ = Original Image (Sharpest)\n*   $L(x, y, 1)$ = Slightly Blurred\n*   $L(x, y, 10)$ = Very Blurred\n\n**Why the Camera Image is First ($t=0$)**\nThe statement implies that the raw image captured by the sensor is the starting point of this stack. It represents the **Inner Scale**—the finest level of detail available.\n*   **Physics Limit**: We cannot recover details smaller than what the camera sensor captured. We cannot 'un-blur' the world to see atoms. We can only *add* blur.\n*   **Starting Point**: Therefore, the camera image is technically $L(x,y, \\sigma_{min})$. All other scale-space representations are derived from it by removing information (smoothing).\n\n**Example Application: SIFT**\nIn SIFT (Scale-Invariant Feature Transform), we look for keypoints that are stable. We search for blobs in the original image. Then we blur it and search again. If a blob exists in the original AND the blurred version, it's a 'strong' feature. The camera image provides the 'ground truth' for the most detailed features.",
+          "type": "Long"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Image Processing Transforms",
+      "summary": "Math tools: DFT, DCT, Wavelets. Frequency domain analysis.",
+      "topics": [
+        {
+          "title": "Spatial vs Frequency Domain",
+          "content": "**Spatial Domain**: Dealing with pixels directly (x, y). (e.g., blurring by averaging neighbors).\n**Frequency Domain**: Dealing with rates of change (u, v). (e.g., removing high-frequency noise).",
+          "analogy": "**Spatial**: Looking at a musical score note by note.\n**Frequency**: Looking at the equalizer bars (Bass, Treble) of the music.",
+          "examples": [
+            "Spatial: Paint bucket tool",
+            "Frequency: JPG compression"
+          ],
+          "diagram": "graph TD\n  A[Spatial Image] -->|FFT| B(Frequency Domain)\n  B -->|Filter High Freqs| C(Modified Frequencies)\n  C -->|Inverse FFT| D[Smoothed Image]\n  style B fill:#3b82f6,stroke:#1d4ed8\n  style C fill:#8b5cf6,stroke:#7c3aed",
+          "extended_content": "**Why engage in this complexity?**\n\nSome things are **Impossible or Slow** in Spatial Domain but **Trivial** in Frequency Domain.\n\n*   **Convolution**: Convolving a large kernel (e.g., 50x50 blur) in Spatial domain is $O(N^2 \\\\cdot K^2)$ (Very Slow). In Frequency domain, it is just **Multiplication** $O(N^2 \\\\log N)$ (Fast).\n\n*   **Pattern Removal**: If you have a 'grid' noise (like a screen door texture) on your photo, it shows up as a few bright dots in the frequency domain. You can just delete those dots and the grid disappears from the entire image instantly."
+        },
+        {
+          "title": "Fourier Transform (DFT)",
+          "content": "Decomposes an image into sine and cosine waves. High frequencies = Edges/Details. Low frequencies = Smooth areas.",
+          "analogy": "Like a prism splitting white light into a rainbow of colors. DFT splits an image into its component 'patterns'.",
+          "examples": [
+            "Used in filtering (removing noise)"
+          ],
+          "extended_content": "**The Key Takeaway for Exams**:\nThe 2D DFT tells you **What** frequencies are present and **How Much** of each.\n\n*   **Center of Spectrum (DC)**: Average brightness of the image (0 frequency).\n*   **Away from Center**: Higher frequencies (finer details).\n*   **Vertical Lines in Image** -> Horizontal Line in Spectrum.\n*   **Horizontal Lines in Image** -> Vertical Line in Spectrum.\n(It's always rotated by 90 degrees because horizontal change happens as you move horizontally)."
+        },
+        {
+          "title": "Image Restoration",
+          "content": "**Goal**: To recover an image that has been degraded (by blur or noise). Unlike 'Enhancement' (which makes it look good), 'Restoration' tries to make it mathematically true to the original.\n**Technique**: Inverse Filtering (Dividing by the degradation function in Frequency Domain).",
+          "analogy": "Enhancement: Putting makeup on to look better.\nRestoration: Solving a crime to find out what someone looked like before the accident.",
+          "examples": [
+            "Weiner Filter",
+            "De-blurring"
+          ],
+          "extended_content": "**The Math**: If Image $G = H \\cdot F + Noise$, we try to find $F$ by doing $F \\approx G / H$. But since Noise is unknown, simple division gives garbage results. That is why we use **Wiener Filtering**, which considers the noise statistics."
+        },
+        {
+          "title": "Compare: DFT vs DCT vs DWT",
+          "content": "**DFT**: Complex numbers (Mag + Phase). Good for analysis. Periodic.\n**DCT**: Real numbers (Cosines only). Good for Compression (JPEG). Mirror boundaries.\n**DWT**: Wavelets relative to scale. Good for time-frequency analysis (Localizing where a frequency happens).",
+          "analogy": "**DFT**: Sheet music that lasts forever.\n**DCT**: Sheet music optimized for storage.\n**DWT**: Sheet music that tells you exactly when the drummer hits the cymbal.",
+          "examples": [
+            "DFT: Signal Analysis",
+            "DCT: JPEG Images",
+            "DWT: Fingerprint standard (JPEG 2000)"
+          ]
+        }
+      ],
+      "pyqs": [
+        {
+          "id": "q5",
+          "question": "Differentiate and contrast advantages/disadvantages of spatial and frequency domains.",
+          "marks": 4,
+          "answer": "In image processing, we can manipulate images in two primary 'worlds': the Spatial Domain and the Frequency Domain. Each has its own strengths and weaknesses.\n\n**Spatial Domain**\nThis is the raw image as we see it, composed of a matrix of pixels intensities at coordinates $(x,y)$.\n*   **Advantages**: It is intuitive and straightforward. If you want to make a pixel brighter, you just add value to it. Operations like thresholding or simple smoothing are computationally very fast and easy to implement because they only depend on local neighbors.\n*   **Disadvantages**: Global operations can be slow (convolution with large kernels). More importantly, it is difficult to separate 'noise' from 'detail' because they both just look like changing pixel values. Complex filtering is often mathematically messy in the spatial domain.\n\n**Frequency Domain**\nHere, the image is transformed (usually via Fourier Transform) into a sum of sine and cosine waves with varying frequencies.\n*   **Advantages**: This domain is powerful for analysis. 'Noise' usually lives in the high frequencies, while 'general structure' lives in low frequencies. We can easily delete specific frequencies to remove specific types of noise (like periodic stripes) which would be impossible in the spatial domain. Also, thanks to the Convolution Theorem, complex convolution becomes simple multiplication in the frequency domain, which is much faster for large filters.\n*   **Disadvantages**: It is abstract and unintuitive for humans to look at a frequency spectrum. There is also the computational 'overhead' cost of converting the image to the frequency domain (FFT) and then converting it back (Inverse FFT) to view the result.",
+          "type": "Short"
+        },
+        {
+          "id": "q11a",
+          "question": "Describe the one-dimensional Inverse DFT idea in terms of DFT. Use equations to back up your response.",
+          "marks": 6,
+          "answer": "The **Inverse DFT (IDFT)** is the operation that converts the Frequency Domain representation back into the Spatial (or Time) Domain. It proves that no information is lost during the Forward DFT.\n\n**Concept**:\nIf the Forward DFT decomposes a signal into a sum of sine/cosine waves, the Inverse DFT takes those waves (amplitudes and phases) and sums them up to reconstruct the original signal.\n\n**Equations**:\n\n*   **Forward DFT ($F(u)$)**:\n    $F(u) = \\sum_{x=0}^{N-1} f(x) e^{-j 2\\pi u x / N}$\n    (Here we sum the signal multiplied by basis functions).\n\n*   **Inverse DFT ($f(x)$)**:\n    $f(x) = \\frac{1}{N} \\sum_{u=0}^{N-1} F(u) e^{j 2\\pi u x / N}$\n\n**Key Differences**:\n1.  **Sign of Exponent**: The Forward DFT uses $e^{-j...}$ (analysis), while IDFT uses $e^{+j...}$ (synthesis).\n2.  **Normalization**: The IDFT usually includes a division by $N$ (the total number of samples) to scale the energy back to the original level.",
+          "type": "Medium"
+        },
+        {
+          "id": "q11b",
+          "question": "Look at the details of one-dimensional wavelet transforms.",
+          "marks": 6,
+          "answer": "The **Wavelet Transform** solves a major limitation of the Fourier Transform: the loss of *time* (or spatial) information. The DFT tells you *what* frequencies exist, but not *where*.\n\n**Key Details of 1D Wavelet (DWT)**:\n\n1.  **Multi-Resolution Analysis**: It decomposes a signal into different frequency bands at different scales. It analyzes the signal with a short window for high frequencies (details) and a long window for low frequencies (trends).\n\n2.  **Scaling and Wavelet Functions**:\n    *   **Father Wavelet ($\\\\phi$)**: Responsible for the 'Approximation' (Low Pass).\n    *   **Mother Wavelet ($\\\\psi$)**: Responsible for the 'Detail' (High Pass).\n\n3.  **Process (Filter Bank)**:\n    The signal is passed through a Low-Pass Filter (L) and a High-Pass Filter (H). Then it is downsampled by 2. \n    *   **Result**: One part contains the smooth shape (Approx), the other contains the sharp changes/noise (Detail).\n    *   This is repeated recursively on the Low-Pass part.",
+          "type": "Medium"
+        },
+        {
+          "id": "q14a",
+          "question": "What benefits does histogram equalization offer? Show, using an example, that the results of the second pass of histogram equalization are identical to those of the first pass.",
+          "marks": 10,
+          "answer": "**Histogram Equalization (HE)** is a technique used in computer vision and image processing to improve the contrast of an image. It works by effectively spreading out the most frequent intensity values, stretching out the intensity range of the image.\n\n**Benefits:**\n1.  **Contrast Enhancement**: It is incredibly useful for images that are too dark, too bright, or washed out (low contrast). By flattening the histogram, it ensures that pixels utilize the full range of available brightness values (0 to 255).\n2.  **Detail Revelation**: In a dark photo, details are often hidden in the shadows. HE stretches these dark values apart, making subtle differences visible to the human eye. This is critical in medical imaging (e.g., making bone structures clearer in X-rays).\n3.  **Automatic Operation**: Unlike manual brightness/contrast sliders, HE is an algorithm that adapts to the specific statistics of the input image automatically.\n\n**Idempotency (Why the Second Pass is Identical)**\nThe question asks to show why running HE a second time (Pass 2) gives the exact same result as Pass 1. This property is called **Idempotency**.\n\n*   **The Logic**: The goal of Histogram Equalization is to produce an output image that has a uniform (flat) histogram. After the first pass, the image's histogram is ideally already uniform (or as close to uniform as possible given discrete pixel levels).\n*   **The Second Pass**: When you try to equalize an image that already has a uniform histogram, the algorithm calculates the Probability Density Function (PDF) and Cumulative Distribution Function (CDF). For a perfectly uniform histogram, the CDF is a straight diagonal line. When you use a linear CDF as a mapping function, it maps every input pixel to itself (Input 50 -> Output 50). It doesn't change anything.\n\n**Example**: \nImagine a 3-bit image (values 0-7) with a histogram confined to values 3, 4, 5.\n*   **Pass 1**: The algorithm stretches these values. 3 becomes 0, 4 becomes 4, 5 becomes 7. The range is now maximized.\n*   **Pass 2**: The input is now 0, 4, 7. The algorithm sees that the values are already spread across the full range. It calculates the mapping and finds that 0 should stay 0, 4 should stay 4, and 7 should stay 7. \nTherefore, $HE(HE(Image)) = HE(Image)$. The process has saturated after one step.",
+          "type": "Long"
+        },
+        {
+          "id": "q14b",
+          "question": "Give a 2D DFT and 2D DCT comparison and comment. Consider both the likenesses and differences.",
+          "marks": 10,
+          "answer": "**DFT (Discrete Fourier Transform)** and **DCT (Discrete Cosine Transform)** are both methods to convert an image from the Spatial Domain to the Frequency Domain. They are cousins, but they have distinct personalities.\n\n**1. Basis Functions (The Ingredients)**\n*   **DFT**: Uses complex exponentials ($e^{-i2\\pi...}$), which are composed of both Sines and Cosines. This means DFT deals with **Complex Numbers** (Real + Imaginary parts). It produces Magnitude and Phase.\n*   **DCT**: Uses only **Cosines**. It works entirely with **Real Numbers**. This makes it computationally simpler and storage-friendly (no imaginary part to store).\n\n**2. Boundary Conditions (The Edges)**\n*   **DFT** assumes the signal is **Periodic**. It imagines the image repeats forever. If the left side of the photo is black and the right side is white, DFT thinks there is a sharp 'cliff' where they loop around. This creates high-frequency artifacts (Gibbs phenomenon) at the boundaries.\n*   **DCT** assumes **Even Symmetry** (Mirroring). It imagines the image is mirrored at the edge. The transition from the right edge (White) to the mirrored right edge (White) is smooth. This reduces artifacts.\n\n**3. Energy Compaction (The Compression Power)**\n*   **DCT is King**: DCT is famously good at packing most of the image's identifying information into just a few coefficients in the top-left corner (Low Frequencies). This is why **JPEG** uses DCT. You can throw away 80% of the DCT coefficients and the image still looks good.\n*   **DFT is Weaker**: DFT spreads the energy more. It is less efficient for compression.\n\n**Comment**: Use **DCT** for compression (JPEG, MPEG). Use **DFT** for mathematical analysis and filtering (Convolution, Phase Correlation).",
+          "type": "Long"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Image Processing Operations",
+      "summary": "Filtering, Segmentation, and Color Models.",
+      "topics": [
+        {
+          "title": "Smoothing vs Sharpening",
+          "content": "**Smoothing**: Removes noise, blurs image. Uses Averaging or Gaussian filters. (Low-pass filter)\n**Sharpening**: Highlights edges/details. Uses Gradient/Laplacian filters. (High-pass filter)",
+          "analogy": "**Smoothing**: Smudging a pencil drawing to hide mistakes.\n**Sharpening**: Outlining the drawing with a pen to make it pop.",
+          "examples": [
+            "Smoothing: Gaussian Blur",
+            "Sharpening: Unsharp Mask"
+          ],
+          "extended_content": "**Mathematical Intuition**:\n\n*   **Smoothing (Low Pass)**: We want primarily 'Average' values. A pixel becomes the average of its neighbors.\n    [1 1 1]\n    [1 1 1] / 9\n    [1 1 1]\n\n*   **Sharpening (High Pass)**: We want the 'Difference'. A pixel becomes the difference between itself and neighbors. This is a **Derivative**.\n    [-1 -1 -1]\n    [-1  8 -1]\n    [-1 -1 -1]"
+        },
+        {
+          "title": "Color Models: RGB vs CMYK vs HSI",
+          "content": "**RGB**: Additive (Light). Used in Screens. (Red+Green+Blue = White).\n**CMYK**: Subtractive (Pigment). Used in Printing. (Cyan+Magenta+Yellow+Key = Black).\n**HSI (Hue, Saturation, Intensity)**: Closer to how humans perceive color.",
+          "analogy": "**RGB**: Mixing colored flashlights.\n**CMYK**: Mixing paint.\n**HSI**: Describing a color ('It's a bright, deep Red').",
+          "examples": [
+            "RGB: Monitor",
+            "CMYK: Printer",
+            "HSI: Image analysis"
+          ],
+          "diagram": "pie title Color Models Usage\n  \"RGB (Screens)\" : 80\n  \"CMYK (Printers)\" : 15\n  \"HSI (Human Vision/Analysis)\" : 5",
+          "extended_content": "**Why HSI is magic for Vision**:\nIf you want to track a red ball in a video, using RGB is hard. If the ball goes into shadow, $R$ drops (e.g., 200 -> 100). You have to check `if R > 150`, which fails.\n\nIn HSI, the **Hue** (Color) stays exactly the same (0 degrees = Red) whether it is bright or dark. The Intensity changes, but the Hue is constant. This makes color tracking robust to lighting changes."
+        },
+        {
+          "title": "Segmentation Techniques",
+          "content": "**1. Edge-Based**: Find boundaries (Canny) and connect them. Hard if lines are broken.\n**2. Region-Based**: Start with a seed and 'grow' the region if neighbors are similar (Region Growing). Or split the image until homogeneous (Split & Merge).\n**3. Clustering**: Ignore position, just group pixels by color (K-Means).",
+          "analogy": "**Edge**: Drawing the outline first.\n**Region**: Coloring inside the lines until you hit a different color.\n**Clustering**: Sorting M&Ms by color.",
+          "examples": [
+            "Edge: Road Lane detection",
+            "Region: Medical Organ extraction",
+            "Clustering: MRI Tissue types"
+          ],
+          "extended_content": "**Thresholding** is the simplest form of Region-based segmentation. \n*   **Global Thresholding**: One value ($T=128$) for the whole image.\n*   **Adaptive Thresholding**: Calculate a different $T$ for every small chunk of the image (good for documents with shadows)."
+        }
+      ],
+      "pyqs": [
+        {
+          "id": "q12a",
+          "question": "Describe RGB color model. How to convert to HSI?",
+          "marks": 6,
+          "answer": "The **RGB Color Model** is an additive color model based on the Cartesian coordinate system. It is the most common model used in digital screens (monitors, cameras, phone displays).\n\n**Core Concept:**\nColor is represented by three components: **Red (R)**, **Green (G)**, and **Blue (B)**. Each component usually ranges from 0 to 255 (in 8-bit color).\n*   **Additive Nature**: Colors are created by adding light. \n    *   Red + Green = Yellow\n    *   Green + Blue = Cyan\n    *   Blue + Red = Magenta\n    *   Red + Green + Blue = Pure White\n    *   (0, 0, 0) = Pure Black\nGeometrically, the RGB model can be visualized as a **Cube** where the three axes represent the R, G, and B intensities. Black is at the origin (0,0,0) and White is at the opposite diagonal corner (255,255,255).\n\n**Conversion to HSI (Hue, Saturation, Intensity)**\nWhile RGB is great for hardware, it isn't how humans describe color. We use HSI. Converting RGB to HSI involves mathematical formulas to extract brightness, purity, and color type.\n\n1.  **Intensity (I)**: This is simply the brightness. It's the average of the RGB channels.\n    $I = \\frac{R + G + B}{3}$\n\n2.  **Saturation (S)**: This describes how 'pure' the color is. A value of 0 means grayscale/faded, and 1 means vibrant color.\n    $S = 1 - \\frac{3}{R+G+B} \\cdot \\min(R, G, B)$ \n\n3.  **Hue (H)**: This describes the actual color (the angle on the color wheel). It is calculated using the angle formula:\n    $\theta = \\arccos\\left(\\frac{\\frac{1}{2}((R-G) + (R-B))}{\\sqrt{(R-G)^2 + (R-B)(G-B)}}\\right)$\n    If $B > G$, then $H = 360 - \\theta$. Otherwise $H = \\theta$.\n\nThe HSI model separates the color information (H, S) from the lighting information (I), which is crucial for computer vision tasks where we want to detect objects regardless of shadows.",
+          "type": "Medium"
+        },
+        {
+          "id": "q12b",
+          "question": "List out three possible implementations of image segmentation we come across on a daily basis.",
+          "marks": 6,
+          "answer": "Image segmentation is the task of dividing an image into meaningful parts. Here are three daily-life implementations:\n\n**1. Portrait Mode (Background Blurring) on Smartphones**\n*   **Technique**: Salience Detection / Deep Learning masks.\n*   **How it works**: When you take a selfie, the phone's AI segments the image into two classes: 'Person' and 'Background'. It keeps the 'Person' pixels sharp and applies a Gaussian blur to the 'Background' pixels.\n*   **Goal**: To simulate the shallow depth of field of expensive DSLR cameras.\n\n**2. Document Scanning (CamScanner / Adobe Scan)**\n*   **Technique**: Adaptive Thresholding / Edge Detection.\n*   **How it works**: When you take a picture of a paper on a desk, the app segments the 'Paper' quadrilaterial from the 'Desk'. It then performs a perspective warp to flatten it and thresholding to turn gray paper into stark white and ink into black.\n*   **Goal**: Text readability and digitization.\n\n**3. Autonomous Driving (Lane & Object Detection)**\n*   **Technique**: Semantic Segmentation (e.g., SegNet, U-Net).\n*   **How it works**: A Tesla or modern car constantly analyzes the road video. It assigns every pixel a label: 'Road', 'Lane Line', 'Car', 'Pedestrian', 'Sky'.\n*   **Goal**: Safety. If the car knows which pixels are 'Road', it knows exactly where it can drive.",
+          "type": "Medium"
+        },
+        {
+          "id": "q8",
+          "question": "Pixel-based segmentation vs Clustering.",
+          "marks": 4,
+          "answer": "Image segmentation is the process of partitioning an image into different regions or objects. There are different strategies to achieve this, two of which are Pixel-based segmentation and Clustering-based segmentation.\n\n**Pixel-Based Segmentation (Thresholding)**\nThis is the simplest approach. It relies on the local properties of individual pixels. A decision is made for every pixel independently, usually based on intensity (brightness).\n*   **Method**: We pick a 'Threshold' value (T). If a pixel's value is greater than T, we classify it as 'Foreground' (Object). If it is less than T, it is 'Background'.\n*   **Pros/Cons**: It is extremely fast. However, it is very sensitive to noise. A single noise pixel in a dark region will be wrongly classified as an object. It does not consider the context of neighbors.\n\n**Clustering-Based Segmentation (K-Means)**\nThis is a more global approach. It groups pixels together into 'clusters' based on similarities in feature space (color, position, texture).\n*   **Method**: The algorithm looks at all pixels and tries to find $K$ natural groups. For example, in a photo of a person on grass, K-means might find that all 'greenish' pixels belong to one group (Grass) and all 'flesh-tone' pixels belong to another interaction (Person). It implies that pixels with similar colors probably belong to the same object.\n*   **Analogy**: Pixel-based is like a teacher grading exams purely by score (Above 50 = Pass, Below 50 = Fail). Clustering is like the teacher sorting students into study groups based on their interests—regardless of their scores.",
+          "type": "Short"
+        },
+        {
+          "id": "q6",
+          "question": "Briefly describe the idea behind gradient-based sharpening filters.",
+          "marks": 4,
+          "answer": "Gradient-based sharpening filters (like the Laplacian or High-Boost filter) work on the principle that **edges** are high-frequency components where pixel intensity changes rapidly (high gradient).\n\n**The Mechanism**:\n1.  **Calculate Derivative**: We compute the spatial derivative (gradient) of the image. In a flat region (sky), the derivative is 0. At an edge (building outline), the derivative is high.\n2.  **Add to Original**: We take this 'derivative image' (which contains only edges) and **add** it back to the original image.\n    $Image_{sharp} = Image_{original} + k \\cdot (Edges)$\n\n**Intuition**: If a pixel is slightly brighter than its neighbor, the gradient calculation highlights this difference. Adding it back makes the bright pixel even brighter and the dark one darker, increasing local contrast (Sharpness).",
+          "type": "Short"
+        },
+        {
+          "id": "q7",
+          "question": "What does the term 'image segmentation' mean to you? Briefly describe each category.",
+          "marks": 4,
+          "answer": "**Image Segmentation** is the process of partitioning a digital image into multiple segments (sets of pixels), effectively reducing the complexity of the image to make it easier to analyze.\n\n**Categories:**\n1.  **Region-Based**: Grouping pixels that are similar in color, texture, or intensity. (e.g., Region Growing, Split and Merge).\n2.  **Edge-Based**: Finding boundaries between regions using edge detectors (Canny, Sobel) and connecting them to form shapes.\n3.  **Clustering-Based**: Using algorithms like K-Means to cluster pixels in color space (e.g., all 'red' pixels are one group).\n4.  **Deep Learning Based**: Using Convolutional Neural Networks (like U-Net) to assign a semantic label to every single pixel (Semantic Segmentation) or distinguish individual object instances (Instance Segmentation).",
+          "type": "Short"
+        },
+        {
+          "id": "q15a",
+          "question": "For the purpose of producing the complement of a given color picture, derive the CMY transforms.",
+          "marks": 10,
+          "answer": "The **CMY (Cyan, Magenta, Yellow)** model is a subtractive color model used in printing. It is the complement of the RGB (Red, Green, Blue) additive model used in light.\n\n**Derivation / Logic**:\n*   **Cyan** absorbs Red. (White Light - Red = Cyan).\n*   **Magenta** absorbs Green. (White Light - Green = Magenta).\n*   **Yellow** absorbs Blue. (White Light - Blue = Yellow).\n\n**Mathematical Transform**:\nAssuming the RGB values are normalized to the range [0, 1]:\n\n$$ C = 1.0 - R $$\n$$ M = 1.0 - G $$\n$$ Y = 1.0 - B $$\n\nIf the values are in 8-bit range [0, 255]:\n\n$$ C = 255 - R $$\n$$ M = 255 - G $$\n$$ Y = 255 - B $$\n\n**Producing the Complement (Negative)**:\nIn the RGB space, the 'complement' or negative of an image is exactly this calculation. If you have a Red pixel (255, 0, 0), its complement is (0, 255, 255) which is Cyan. Therefore, converting an RGB image to CMY is mathematically identical to inverting the colors (creating a photo negative).",
+          "type": "Long"
+        },
+        {
+          "id": "q15b",
+          "question": "Examine the CMYK and RGB color models. Give specifics on their memory requirements and color ranges.",
+          "marks": 10,
+          "answer": "**1. RGB (Red, Green, Blue)**\n*   **Type**: Additive (Light-based). Used for theoretical 'Light' mixing.\n*   **Context**: Monitors, Cameras, Scanners.\n*   **Memory**: Typically **24 bits per pixel** (8 bits Red, 8 bits Green, 8 bits Blue). This allows for $2^{24} \\approx 16.7$ million colors.\n*   **Gamut (Range)**: Large. Can produce very bright, saturated neons (especially greens and blues) that are physically impossible to print with ink.\n\n**2. CMYK (Cyan, Magenta, Yellow, Key/Black)**\n*   **Type**: Subtractive (Ink-based). Used for physical pigment mixing.\n*   **Context**: Printers, Magazines, Posters.\n*   **Why K?**: Theoretically, C+M+Y = Black. But in reality, it makes a muddy brown. So we add pure **Black (Key)** ink to save money and dry faster.\n*   **Memory**: Typically **32 bits per pixel** (8 bits for each of C, M, Y, K). It takes up 33% more memory than RGB.\n*   **Gamut (Range)**: Smaller. Ink absorbs light, so it cannot reproduce the bright glowing colors of a screen. This is why photos often look duller when printed than they did on the monitor.\n\n**Comparison**:\n*   RGB is for **Screen consumption**.\n*   CMYK is for **Paper production**.\n*   Converting RGB -> CMYK (Out-of-gamut warning) is a critical step in graphic design.",
+          "type": "Long"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Feature Extraction",
+      "summary": "Finding edges, corners, and keypoints (SIFT, SURF).",
+      "topics": [
+        {
+          "title": "Edge Detection: Canny vs LoG",
+          "content": "**Canny**: Multi-stage (Gaussian Blur -> Gradients -> Non-max suppression -> Hysteresis). The 'Gold Standard'. Thin, clean edges.\n**LoG (Laplacian of Gaussian)**: Smoothes then finds zero-crossings of second derivative. Good for blobs.",
+          "analogy": "**Canny**: Carefully tracing lines with a fine-point pen.\n**LoG**: Finding the change in slope of a hill.",
+          "examples": [
+            "Canny: Lane detection"
+          ],
+          "diagram": "flowchart LR\n  A[Input Image] --> B[Gaussian Blur]\n  B --> C[Find Gradients]\n  C --> D[Non-Max Suppression]\n  D --> E[Hysteresis Check]\n  E --> F[Canny Edges]\n  style F stroke:#ef4444,stroke-width:2px",
+          "extended_content": "**Mnemonic for Canny Steps (BG-NMH)**:\n\n1.  **B**lur: Remove noise (so we don't detect noise as edges).\n2.  **G**radient: Find where brightness changes fast (Sobel filter).\n3.  **N**on-Max: Thin the edges. If a pixel isn't the 'peak' of the edge, kill it.\n4.  **H**ysteresis: Double Threshold. Strong edges are kept. Weak edges are ONLY kept if they touch a strong edge. (Connects the dots)."
+        },
+        {
+          "title": "SIFT vs SURF",
+          "content": "**SIFT (Scale-Invariant Feature Transform)**: Finds keypoints invariant to scale/rotation. Very accurate but slow.\n**SURF (Speeded-Up Robust Features)**: Approximation of SIFT. Much faster, slightly less accurate.",
+          "analogy": "**SIFT**: A precise master map-maker matching landmarks.\n**SURF**: A fast scout quickly identifying major landmarks.",
+          "examples": [
+            "Object recognition",
+            "Panorama stitching"
+          ],
+          "extended_content": "**Why 'Scale Invariant' matters?**\n\nIf you take a photo of a logo, then walk back 10 meters and take another photo, the logo is smaller (different scale). \n\n*   Standard matching (template matching) Failed.\n*   **SIFT** finds 'blobs' at different scales (using Gaussian pyramids) and says 'Hey, this tiny blob here matches that big blob there'. This is why it revolutionized Computer Vision in 2004."
+        },
+        {
+          "title": "Advanced Features",
+          "content": "**Hough Transform**: Global method to find lines and circles by voting. Good for finding defined shapes even if broken.\n**HOG (Histogram of Oriented Gradients)**: Counts the direction of gradients in 8x8 squares. The standard for Human Detection.\n**Gabor Filters**: Detects texture at specific frequencies and orientations (like visual cortex).",
+          "analogy": "**Hough**: A voting system. Every edge point votes for all possible lines that pass through it. The line with most votes wins.\n**HOG**: Describing a person by the shape of their edges (shoulders, legs).",
+          "examples": [
+            "Hough: Lane markings (Straight lines)",
+            "HOG: Pedestrian detection"
+          ],
+          "extended_content": "**Hough Line Transform**:\nUses the polar equation $\\rho = x \\cos \\theta + y \\sin \\theta$. We map every $(x,y)$ edge point to a sinusoidal curve in $(\\rho, \\theta)$ space. Where many curves intersect, there is a strong line."
+        }
+      ],
+      "pyqs": [
+        {
+          "id": "q9",
+          "question": "Consider LoG as an edge detector in a brief remark.",
+          "marks": 4,
+          "answer": "**LoG (Laplacian of Gaussian)** is a hybrid edge detector that combines **Smoothing** and **Edge Detection**.\n\n1.  **Gaussian (Smoothing)**: First, it applies a Gaussian blur. This is crucial because the Laplacian derivative is extremely sensitive to noise. Without blurring, every speck of noise would be detected as an edge.\n2.  **Laplacian (2nd Derivative)**: Then, it calculates the second derivative ($\\\nabla^2$). Edges are found where the second derivative crosses **Zero** (Zero Crossing).\n\n**Remark**: LoG is particularly good at finding 'blobs' and closed contours, unlike Sobel which finds directional lines. It finds the 'center' of an edge rather than just the ramp.",
+          "type": "Short"
+        },
+        {
+          "id": "q13a",
+          "question": "Compare and contrast between Canny and LoG based edge detector algorithms briefly.",
+          "marks": 6,
+          "answer": "**Comparison: Canny vs. LoG (Laplacian of Gaussian)**\n\n| Feature | Canny Edge Detector | LoG Edge Detector |\n| :--- | :--- | :--- |\n| **Mechanism** | Gradient Magnitude (1st Derivative) | Zero-Crossing (2nd Derivative) |\n| **Noise Handling** | Uses Gaussian Blur first. Very robust. | Uses Gaussian Blur first. Robust. |\n| **Edge Thickness** | Uses **Non-Max Suppression** to producing single-pixel thin edges. | Often produces double edges or thicker contours (closed loops). |\n| **Output** | Good for detecting open lines and boundaries. | Good for detecting 'blobs' or closed regions. |\n| **Hysteresis** | Uses **Double Thresholding** to connect weak edges to strong ones. | Typically uses a single zero-crossing check. |\n| **Complexity** | High (Multi-stage pipeline). | Medium (Convolution + Zero check). |\n\n**Verdict**: Canny is generally preferred for object boundary detection due to its thin, clean edges.",
+          "type": "Medium"
+        },
+        {
+          "id": "q13b",
+          "question": "Examine the utility of Corner feature detectors in a computer vision context.",
+          "marks": 6,
+          "answer": "**Corner Detection** (e.g., Harris Corner Detector) is a fundamental step in feature extraction.\n\n**Why Corners?**\n*   **Uniqueness**: A flat wall looks the same everywhere. An edge looks the same along the line. But a **Corner** is unique. If you shift a window over a corner, the pixel values change drastically in *all* directions. This makes them easy to track.\n\n**Utility in CV Context**:\n1.  **Image Stitching (Panoramas)**: To stitch two photos, we must find matching points. Corners are ideal anchor points because they are distinct.\n2.  **Motion Tracking**: Optical Flow (Lucas-Kanade) tracks points that are easy to follow. Corners are the best candidates for this.\n3.  **3D Reconstruction**: When building a 3D model from 2D images (Structure from Motion), we triangulate based on these corner feature points.\n4.  **Object Recognition**: Many objects are defined by their corners (boxes, buildings, screens).",
+          "type": "Medium"
+        },
+        {
+          "id": "q10",
+          "question": "Why is SURF a superior detector/descriptor to SIFT?",
+          "marks": 4,
+          "answer": "When comparing SURF (Speeded-Up Robust Features) to SIFT (Scale-Invariant Feature Transform), the term 'superior' depends on the context. SIFT is generally considered more accurate, but SURF is often considered superior for real-time applications because of its immense speed advantage.\n\n**Why SURF is Faster (and thus 'Superior' for speed):**\n\n1.  **Integral Images**: This is the secret weapon of SURF. It allows the algorithm to calculate the sum of pixel values in any rectangular region of the image in constant time $O(1)$. This means calculating a filter on a huge image takes the exact same time as on a tiny image. SIFT does not use this.\n\n2.  **Approximation**: SIFT calculates complex mathematical derivatives (Difference of Gaussians) which are computationally heavy. SURF approximates these derivatives using simple Box Filters (square regions). Accessing these box regions matches perfectly with the Integral Image technique.\n\n3.  **Dimensionality**: The SIFT descriptor has 128 dimensions (creating a vector of 128 numbers for every Keypoint). SURF typically uses 64 dimensions. Comparing and matching 64 numbers is significantly faster than matching 128 numbers, speeding up the actual recognition phase.\n\n**Conclusion**: If you are building a robot that needs to navigate a room in real-time or an AR app on a phone, SURF is superior because SIFT might be too slow to run at 30 frames per second.",
+          "type": "Short"
+        },
+        {
+          "id": "q17a",
+          "question": "Explain the importance of edges in an image. Describe how real-world scenes have additional complexity because of reflected light and shadows.",
+          "marks": 12,
+          "answer": "Edges are arguably the most fundamental features in Computer Vision. An edge is defined as a significant local change in image intensity—usually the boundary between two different regions.\n\n**The Importance of Edges**\n1.  **Data Reduction**: A high-resolution image might have millions of pixels (e.g., 10MB of data). If we extract just the edges, we reduce this to a simple sketch (e.g., 50KB) while retaining almost all the semantic information. We don't need color or texture to recognize a shape.\n2.  **Structural Integrity**: Edges represent the physical structure of objects. Our human visual system is heavily biased towards edge detection. If you look at a line drawing of a chair, you instantly recognize it as a chair, even without color or shading. This makes edges robust features for object recognition algorithms.\n3.  **Invariance**: Edges are relatively stable. Even if the lighting in a room changes (getting brighter or dimmer), the *difference* in brightness between the object and the background usually remains, so the edge stays visible.\n\n**Complexity in Real-World Scenes (Reflections and Shadows)**\nWhile edges are theoretically ideal, the real world is messy. In a perfect, matte world, edges would only exist at the outline of objects (Depth discontinuities) or where surface colors change. However, real scenes introduce 'False Edges' that confuse algorithms.\n\n1.  **Shadows**: A strong shadow cast by a tree onto a sidewalk creates a sharp, high-contrast line. To a computer, this looks exactly like a real physical edge. An autonomous car might see a sharp shadow of a lamppost across the road and think it is a painted black line or a physical obstacle, potentially causing it to brake unnecessarily. The algorithm fails to distinguish between an 'object boundary' and a 'lighting boundary'.\n\n2.  **Reflections (Highlights)**: Shiny surfaces (specularities) like metal or wet roads reflect light. This creates bright hotspots. The boundary of a bright reflection is very sharp. A computer might interpret the reflection of a window on a shiny car hood as a hole or a different colored patch of paint. These are 'virtual' edges that move when the camera moves, unlike real physical edges which are stationary.\n\n3.  **Transparency**: Looking through a glass window creates a complex mix of edges—some from the dirt on the glass, some from the reflection of the room behind you, and some from the actual scene outside. Disentangling which edge belongs to which plane is extremely difficult for standard edge detectors like Canny.\n\nBecause of these complexities, modern Computer Vision has to use higher-level reasoning or machine learning to look at the *context* of an edge (\"Is this a shadow or a curb?\") rather than just the math of pixel differences.",
+          "type": "Very Long"
+        },
+        {
+          "id": "q17b",
+          "question": "Present a feature point (key point) based classification model for distinctly identifying between inter and intra class domestic/wild animals. E.g., domestic cats and tiger/leopard/cheetah.",
+          "marks": 12,
+          "answer": "To distinguish between similar animals (like a House Cat vs. a Tiger), we cannot rely on simple shape alone, as their silhouettes are similar. We need a **Feature-Point Based Classification Model**. Here is a pipeline:\n\n**Phase 1: Feature Extraction (The 'Eyes')**\n1.  **Keypoint Detection (SIFT/SURF)**: We detect distinguishing points in the image. For a Tiger, these might be the corners of the stripes, the eyes, and whiskers.\n2.  **Description**: We describe each point numerically. SIFT gives us a 128-dim vector for each point. This vector describes the *texture* and *gradient* around the point.\n    *   **Cat**: Smooth fur gradients.\n    *   **Tiger**: Sharp, high-contrast stripe gradients.\n    *   **Leopard**: Rosette (circular) spots.\n\n**Phase 2: Vocabulary Construction (Bag of Visual Words)**\nSince every image has a different number of keypoints (100 vs 500), we can't compare them directly. We cluster all the descriptors from all training images (K-Means) to create a 'Vocabulary' of visual words (e.g., 'Stripe-piece', 'Eye-corner', 'Fuzzy-ear').\n\n**Phase 3: Histogram Generation**\nWe convert each image into a Histogram. 'This image has 50 Stripe-pieces and 2 Eye-corners'.\n*   **Tiger Histogram**: High peak in 'Stripe' features.\n*   **Leopard Histogram**: High peak in 'Spot' features.\n*   **Cat Histogram**: High peak in 'Smooth/Fuzzy' features.\n\n**Phase 4: Classification (The 'Brain')**\nWe feed these histograms into a classifier like **SVM (Support Vector Machine)**.\n*   **Inter-Class (Dog vs Cat)**: SVM finds a hyperplane separating 'Snout-features' (Dog) from 'Flat-face-features' (Cat).\n*   **Intra-Class (Cat vs Tiger)**: SVM separates 'Stripe-texture' from 'Uniform-texture'.\n\n**Result**: The system outputs the probability: [Cat: 5%, Tiger: 94%, Dog: 1%].",
+          "type": "Very Long"
+        }
+      ]
+    }
+  ]
+}
