@@ -32,7 +32,7 @@ export default function PYQView() {
             </div>
 
             <div className="grid gap-6">
-                {allPyqs.map((q) => (
+                {allPyqs.map((q, index) => (
                     <div key={q.id} className="bg-surface border border-slate-700 rounded-xl p-6 relative overflow-hidden group hover:border-emerald-500/50 transition-colors">
                         <div className="absolute top-0 right-0 p-2 opacity-10 group-hover:opacity-20 transition-opacity">
                             <FileCheck size={120} />
@@ -44,7 +44,10 @@ export default function PYQView() {
                                     <div className="text-xs text-emerald-400 font-bold uppercase tracking-wider mb-2">
                                         {q.marks} Marks • {q.type} Answer
                                     </div>
-                                    <h3 className="text-lg font-medium text-white mb-2">{q.question}</h3>
+                                    <h3 className="text-lg font-medium text-white mb-2">
+                                        <span className="text-emerald-400 font-bold mr-2">{index + 1}.</span>
+                                        {q.question}
+                                    </h3>
                                 </div>
                             </div>
 
