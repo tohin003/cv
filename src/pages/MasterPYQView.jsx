@@ -1,3 +1,8 @@
+import React, { useState, useMemo } from 'react';
+import { motion } from 'framer-motion';
+import { Search, BookOpen, PenTool } from 'lucide-react';
+import studyData from '../data/study_data.json';
+import MermaidDiagram from '../components/MermaidDiagram';
 import MathText from '../components/MathText';
 
 export default function MasterPYQView() {

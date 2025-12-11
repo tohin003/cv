@@ -20,13 +20,17 @@ function AnimatedRoutes() {
   );
 }
 
+import ErrorBoundary from './components/ErrorBoundary';
+
 function App() {
   return (
     <BrowserRouter>
       <div className="min-h-screen bg-background text-text flex flex-col">
         <Navbar />
         <main className="flex-1 p-4 md:p-8 max-w-7xl mx-auto w-full">
-          <AnimatedRoutes />
+          <ErrorBoundary>
+            <AnimatedRoutes />
+          </ErrorBoundary>
         </main>
         <footer className="p-4 text-center text-muted text-sm pb-10">
           Created by Antigravity
