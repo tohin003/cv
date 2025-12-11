@@ -31,6 +31,7 @@ export default function Navbar() {
                 <div className="flex items-center gap-2">
                     <NavLink to="/" icon={Home} label="Units" />
                     <NavLink to="/pyq" icon={FileQuestion} label="PYQs" />
+                    <NavLink to="/master-pyqs" icon={BookOpen} label="Master Bank" />
                 </div>
             </div>
         </nav>

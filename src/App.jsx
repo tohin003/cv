@@ -3,6 +3,7 @@ import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import UnitView from './pages/UnitView';
 import PYQView from './pages/PYQView';
+import MasterPYQView from './pages/MasterPYQView';
 import { AnimatePresence } from 'framer-motion';
 
 function AnimatedRoutes() {
@@ -13,6 +14,7 @@ function AnimatedRoutes() {
         <Route path="/" element={<Home />} />
         <Route path="/unit/:id" element={<UnitView />} />
         <Route path="/pyq" element={<PYQView />} />
+        <Route path="/master-pyqs" element={<MasterPYQView />} />
       </Routes>
     </AnimatePresence>
   );

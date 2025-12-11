@@ -398,5 +398,252 @@
         }
       ]
     }
+  ],
+  "master_pyqs": [
+    {
+      "id": "mq_a_1",
+      "question": "How does an image progress through the computer vision hierarchy towards interpretation? Explain using an example.",
+      "marks": 4,
+      "type": "Short",
+      "answer": "**1. Low-Level Vision**: Processing raw pixels to extract primitive features (Edges, Corners, Optical Flow). *Input: Image, Output: Features*.\n**2. Mid-Level Vision**: Grouping features into meaningful regions or surfaces (Segmentation, Clustering). *Input: Features, Output: Regions*.\n**3. High-Level Vision**: Interpreting the scene, recognizing objects, and understanding relationships. *Input: Regions, Output: Semantics*.\n\n**Example**: Raw Pixels -> Edge Detection -> Rectangular Shape -> \"This is a Book\"."
+    },
+    {
+      "id": "mq_a_2",
+      "question": "List and explain the breakup of a typical document processing system using a hierarchy diagram.",
+      "marks": 4,
+      "type": "Short",
+      "answer": "**1. Image Capture**: Scanning the document.\n**2. Pre-processing**: Binarization (Black/White), Noise Removal, Skew Correction.\n**3. Layout Analysis**: Separating Text zones from Image zones.\n**4. OCR (Optical Character Recognition)**: Recognizing individual characters.\n**5. Post-processing**: Spell check and formatting.\n\n**Diagram**: `Capture -> Clean -> Segment -> Recognize -> Format`"
+    },
+    {
+      "id": "mq_a_3",
+      "question": "Define the Radiosity Model in brief with mathematical explanation.",
+      "marks": 4,
+      "type": "Short",
+      "answer": "Radiosity is a global illumination method that calculates lighting based on the conservation of energy. It assumes surfaces are **perfectly diffuse** (Lambertian).\n\n**Formula**: $B_i = E_i + \\rho_i \\sum_{j} F_{ij} B_j$\nWhere:\n*   $B_i$: Total energy leaving surface $i$ (Radiosity).\n*   $E_i$: Energy emitted by surface $i$ (if it's a light source).\n*   $\\rho_i$: Reflectivity of surface $i$.\n*   $F_{ij}$: **Form Factor** (Fraction of light leaving $j$ that hits $i$)."
+    },
+    {
+      "id": "mq_a_4",
+      "question": "What are the two aspects of the image formation process? List and explain briefly.",
+      "marks": 4,
+      "type": "Short",
+      "answer": "**1. Geometric Formation**: Determines **WHERE** a 3D point $(X, Y, Z)$ appears on the 2D image plane $(x, y)$. This depends on the camera position, orientation, and focal length (Perspective Projection).\n\n**2. Photometric Formation**: Determines **HOW BRIGHT** that point appears (Intensity $I(x, y)$). This depends on lighting, surface reflectance, and sensor formatting (Radiometry)."
+    },
+    {
+      "id": "mq_a_5",
+      "question": "Outline the expression and explanation for Power Spectrum of a generic 2D DFT.",
+      "marks": 4,
+      "type": "Short",
+      "answer": "The Power Spectrum (or Power Spectral Density) quantifies how much energy is contained at each frequency.\n\n**Expression**: $P(u, v) = |F(u, v)|^2 = R^2(u, v) + I^2(u, v)$\nWhere $F(u, v)$ is the Fourier Transform, $R$ is the Real part, and $I$ is the Imaginary part.\n\n**Significance**: High values in $P(u, v)$ indicate dominant frequencies (textures or patterns) in the image."
+    },
+    {
+      "id": "mq_a_6",
+      "question": "Identify the algorithmic complexity of the frequency domain filtering operation.",
+      "marks": 4,
+      "type": "Short",
+      "answer": "**1. FFT (Fast Fourier Transform)**: $O(N^2 \\log N)$ for an $N \\times N$ image.\n**2. Multiplication**: Element-wise multiplication with filter $H(u,v)$: $O(N^2)$.\n**3. Inverse FFT**: $O(N^2 \\log N)$.\n\n**Total Complexity**: $O(N^2 \\log N)$.\n\n**Comparison**: Spatial convolution is $O(N^2 \\cdot M^2)$ where $M$ is kernel size. Frequency domain is faster when the filter kernel $M$ is large."
+    },
+    {
+      "id": "mq_a_7",
+      "question": "Explain the concept of 'gradient' in image processing operations.",
+      "marks": 4,
+      "type": "Short",
+      "answer": "The gradient vector $\\nabla f$ at a pixel $(x,y)$ points in the direction of the greatest rate of change of intensity.\n\n*   **Magnitude**: $|\\nabla f| = \\sqrt{G_x^2 + G_y^2}$. Tells us 'How strong the edge is'.\n*   **Direction**: $\\theta = \\tan^{-1}(G_y / G_x)$. Tells us 'Where the edge refers to'.\n\nGradients are the fundamental building blocks for Edge Detection (Sobel, Canny) and Feature Descriptors (HOG, SIFT)."
+    },
+    {
+      "id": "mq_a_8",
+      "question": "Identify the correlation between clustering and pixel-based segmentation.",
+      "marks": 4,
+      "type": "Short",
+      "answer": "**Pixel-based Segmentation** (like Thresholding) decides a pixel's class solely based on its own intensity, ignoring neighbors.\n\n**Clustering (K-Means)** is a generalized pixel-based segmentation. It groups pixels into $K$ clusters based on color Similarity (Intensity).\n\n**Difference**: Thresholding usually splits into 2 (Foreground/Background). Clustering splits into $K$ groups (e.g., Sky, Grass, Road)."
+    },
+    {
+      "id": "mq_a_9",
+      "question": "Explain briefly how SURF is a better feature detector/descriptor compared to SIFT?",
+      "marks": 4,
+      "type": "Short",
+      "answer": "**1. Speed**: SURF (Speeded-Up Robust Features) is much faster. It uses **Integral Images** and **Box Filters** (approximations) instead of heavy Gaussian calculations.\n**2. Robustness**: It handles blurring and rotation as well as SIFT.\n**3. Dimension**: SURF descriptor is 64-dim (default), while SIFT is 128-dim. This makes matching faster."
+    },
+    {
+      "id": "mq_a_10",
+      "question": "List few limitations of Gaussian based image edge detectors (like Canny/LoG).",
+      "marks": 4,
+      "type": "Short",
+      "answer": "**1. Smoothing Blurs Junctions**: The Gaussian smoothing used to remove noise also rounds off sharp corners and junctions (Y-junctions).\n**2. Parameter Sensitivity**: Selecting the standard deviation $\\sigma$ is tricky. High $\\sigma$ misses fine details; low $\\sigma$ keeps noise.\n**3. Localization Error**: At high scales (heavy smoothing), the detected edge position shifts away from the true edge."
+    },
+    {
+      "id": "mq_a_11",
+      "question": "What are the inputs and outputs at the mid-level of the Computer Vision Hierarchy?",
+      "marks": 4,
+      "type": "Short",
+      "answer": "**Input**: **Features** (Edges, contours, blobs) extracted from the Low-Level stage.\n**Output**: **Segmented Regions** or **Surfaces**. Groups of pixels that belong to the same object part.\n\n**Goal**: To move from independent pixels to coherent regions (e.g., 'All these red pixels form a circle')."
+    },
+    {
+      "id": "mq_a_12",
+      "question": "Compare between Orthographic perspective projection and weak perspective projection.",
+      "marks": 4,
+      "type": "Short",
+      "answer": "**Orthographic**: Assumes $Z = \\infty$. Rays are parallel to the optical axis. $x = X$. No depth scaling. (Architect blueprints).\n\n**Weak Perspective**: Assumes distinct objects are at a roughly constant depth $Z_{avg}$. We scale the whole object by $f/Z_{avg}$, then use orthographic projection. It keeps the 'scaling' effect of perspective but ignores depth variations *within* the object."
+    },
+    {
+      "id": "mq_a_13",
+      "question": "Analyse the Convolution theorem.",
+      "marks": 4,
+      "type": "Short",
+      "answer": " The Convolution Theorem states: **Convolution in Spatial Domain = Multiplication in Frequency Domain**.\n$$ f(x,y) * h(x,y) \\iff F(u,v) \\cdot H(u,v) $$\n\n**Significance**: Instead of sliding a filter window over every pixel (slow convolution), we can convert image and filter to frequency domain (FFT), multiply them, and convert back (Inverse FFT). This is computationally faster for large filters."
+    },
+    {
+      "id": "mq_a_14",
+      "question": "Simplify what is meant by image Sharpening and Smoothing.",
+      "marks": 4,
+      "type": "Short",
+      "answer": "**Smoothing (Blurring)**: Averaging pixel values with neighbors. Removes high-frequency noise but blurs edges. (Low-Pass Filter).\n\n**Sharpening**: Enhancing the intensity transitions (edges). Adds the derivative (gradient) to the original image. Boosts high frequencies. (High-Pass Filter)."
+    },
+    {
+      "id": "mq_a_15",
+      "question": "What do you understand by Image Segmentation? List briefly different types.",
+      "marks": 4,
+      "type": "Short",
+      "answer": "**Definition**: Partitioning an image into meaningful, non-overlapping regions (sets of pixels) that correspond to objects or parts of objects.\n\n**Types**:\n1.  **Edge-based**: Find boundaries (discontinuities).\n2.  **Region-based**: Group similar pixels (Region Growing).\n3.  **Clustering**: K-Means clustering in color space.\n4.  **Deep Learning**: U-Net / Mask R-CNN."
+    },
+    {
+      "id": "mq_a_16",
+      "question": "Summarize some properties of HOG (Histogram of Oriented Gradients).",
+      "marks": 4,
+      "type": "Short",
+      "answer": "**1. Edges over Color**: HOG generally ignores color and focuses on the *shape* (gradients).\n**2. Robust to Lighting**: Normalization of blocks makes it invariant to change in illumination.\n**3. Localized**: Computed in small $8 \\times 8$ cells, capturing local structure.\n**4. Human Detection**: Specifically designed (by Dalal & Triggs) to capture the upright silhouette of pedestrians."
+    },
+    {
+      "id": "mq_a_17",
+      "question": "Define Harris and Hessian Affine transformation.",
+      "marks": 4,
+      "type": "Short",
+      "answer": "These are **Interest Point Detectors** invariant to affine transformations (scaling + rotation + shears/viewpoint change).\n\n*   **Harris-Affine**: Detects corners using the Harris matrix, then iteratively adapts the integration window to the elliptical shape of the region to handle view changes.\n*   **Hessian-Affine**: Detects blobs using the Hessian matrix determinant (curvature), also adapted for affine invariance.\n\nThey allow matching features even when the camera looks at the object from a steep angle."
+    },
+    {
+      "id": "mq_a_18",
+      "question": "List the difference between Verification and Recognition in context of Biometrics.",
+      "marks": 4,
+      "type": "Short",
+      "answer": "**Verification (1:1)**: \"Are you who you say you are?\" Comparing live input to ONE stored template (e.g., Phone Unlock). Fast, High Accuracy.\n\n**Recognition (1:N)**: \"Who are you?\" Comparing live input to MANY stored templates to find a match (e.g., FBI Criminal Search). Slower, Higher False Positive rate."
+    },
+    {
+      "id": "mq_a_19",
+      "question": "What is Fourier series?",
+      "marks": 4,
+      "type": "Short",
+      "answer": "Fourier Series states that any periodic function $f(t)$ can be expressed as a sum of sins and cosines of different frequencies.\n$$ f(t) = a_0 + \\sum (a_n \\cos(nt) + b_n \\sin(nt)) $$\nIn Images (2D), it means any image can be constructed by stacking 'grating' patterns of brightness."
+    },
+    {
+      "id": "mq_a_20",
+      "question": "Model orientation as a feature attribute for a key point feature.",
+      "marks": 4,
+      "type": "Short",
+      "answer": "To make a feature **Rotation Invariant**, we assign it a dominant orientation.\n\n**How**: Calculate the gradient direction $\\theta$ for all pixels around the keypoint. Create a histogram.\nThe **peak** of the histogram is assigned as the keypoint's 'Orientation'.\nWhen matching, we rotate everything relative to this dominant angle, so a tilted object matches an upright one."
+    },
+    {
+      "id": "mq_b_1",
+      "question": "Categorise what are filters. Write down the steps involved in filtering.",
+      "marks": 6,
+      "type": "Medium",
+      "answer": "**Categories**:\n1.  **Linear Filters**: Output is a weighted sum of inputs (e.g., Gaussian, Mean, Sobel).\n2.  **Non-Linear Filters**: Output depends on ordering or logic (e.g., Median Filter for salt-and-pepper noise, Min/Max filters).\n\n**Steps**:\n1.  **Flip** the kernel (rotation by 180 degrees) - vital for true convolution.\n2.  **Slide** the kernel over the image pixel by pixel.\n3.  **Multiply** kernel values with underlying image pixels.\n4.  **Sum** the products to get the new pixel value."
+    },
+    {
+      "id": "mq_b_2",
+      "question": "Analyse the properties of 2D Discrete Fourier Transform.",
+      "marks": 6,
+      "type": "Medium",
+      "answer": "**1. Separability**: 2D DFT can be computed as two 1D DFTs (rows then columns). Speed: $O(N^2) \\to O(2N)$.\n**2. Periodicity**: The spectrum repeats indefinitely ($F(u, v) = F(u+N, v+N)$).\n**3. Translation**: Shifting image spatial position only changes the Phase, not the Magnitude (Power Spectrum is invariant).\n**4. Rotation**: Rotating image by $\\theta$ rotates the spectrum by $\\theta$."
+    },
+    {
+      "id": "mq_b_3",
+      "question": "Examine and describe detailed examples for implementation of Scale-Space in Practice.",
+      "marks": 6,
+      "type": "Medium",
+      "answer": "**Concept**: Represents an image at multiple resolutions. Real-world objects exist at different scales (a tree is big, a leaf is small).\n\n**Implementation**: Gaussian Pyramid.\n1.  **Blur** the original image with Gaussian $(\\sigma)$.\n2.  **Downsample** (cut size in half).\n3.  **Repeat**.\n\n**Example**: **SIFT** uses Scale-Space to find keypoints. A tiny blob in the original HD image might be noise, but if it persists after blurring 3 times, it's a stable feature (like an eye)."
+    },
+    {
+      "id": "mq_b_4",
+      "question": "List the pros and cons of Hough transform.",
+      "marks": 6,
+      "type": "Medium",
+      "answer": "**Pros**:\n1.  **Robust to Noise**: Random noise pixels don't align to form a peak in accumulator.\n2.  **Handles Partial Occlusion**: Finds the line even if it's dashed or broken (just needs enough votes).\n3.  **Finds Multiple Lines** at once.\n\n**Cons**:\n1.  **Slow**: computation increases with the size of Accumulator array.\n2.  **Memory Hog**: Large high-res parameter space requires huge RAM.\n3.  **Scale Dependent**: Needs adjustment for thick vs thin lines."
+    },
+    {
+      "id": "mq_b_5",
+      "question": "Examine edge based and pixel based segmentation?",
+      "marks": 6,
+      "type": "Medium",
+      "answer": "**Edge-Based**:\n*   **Focus**: Discontinuities.\n*   **Logic**: \"Where does the value change abruptly?\"\n*   **Method**: Gradient $\\nabla f$, Laplacian $\\nabla^2 f$. (Canny, Sobel).\n*   **Problem**: Produces broken boundaries that don't close locally.\n\n**Pixel-Based (Region/Threshold)**:\n*   **Focus**: Similarity.\n*   **Logic**: \"Are these values similar to a group?\"\n*   **Method**: Histogram Thresholding (Otsu), Clustering.\n*   **Problem**: Can create holes inside objects if lighting is uneven."
+    },
+    {
+      "id": "mq_b_6",
+      "question": "Explain the process of feature extraction.",
+      "marks": 6,
+      "type": "Medium",
+      "answer": "Process of turning raw pixels into meaningful descriptors:\n1.  **Detection**: Find 'Interest Points' (Corners, Blobs) that are unique. (Harris, SIFT Detector).\n2.  **Description**: Describe the neighborhood of that point as a vector. (SIFT Histogram, BRIEF binary string). Must be invariant to rotation/scale.\n3.  **Matching**: Compare vectors between two images (Euclidean distance, Hamming distance)."
+    },
+    {
+      "id": "mq_b_7",
+      "question": "List the pros and cons of Gaussian and Gabor filter.",
+      "marks": 6,
+      "type": "Medium",
+      "answer": "**Gaussian**:\n*   **Pros**: Perfect smoother, separable (fast), no ringing artifacts.\n*   **Cons**: Blurs edges indiscriminately.\n\n**Gabor**:\n*   **Pros**: Mimics mammalian visual cortex (V1). Excellent for **Texture Analysis** and **Orientation detection**.\n*   **Cons**: Computationally expensive (complex numbers). Non-orthogonal basis (redundant information)."
+    },
+    {
+      "id": "mq_c_1",
+      "question": "Analyse feature detection and matching in detail.",
+      "marks": 10,
+      "type": "Long",
+      "answer": "**1. Detection**: Identifying 'stable' points. A good feature (corner) has high intensity change in ALL directions. (Harris Corner Check: $\\det(M) - k(\\text{trace}(M))^2$).\n\n**2. Description (SIFT)**:\n*   Take $16 \\times 16$ window around point.\n*   Divide into $4 \\times 4$ sub-blocks.\n*   Compute gradient orientation histograms (8 bins) for each block.\n*   Result: $4 \\times 4 \\times 8 = 128$ dimensional vector.\n\n**3. Matching**: For feature $A$ in Image 1, find nearest neighbor $B$ in Image 2. \n*   **Ratio Test**: Reject match if $\\frac{Dist(Nearest)}{Dist(2nd Nearest)} > 0.8$. This removes ambiguous matches (repeating patterns)."
+    },
+    {
+      "id": "mq_c_2",
+      "question": "Inspect the argument that 2D DFT can be an efficient way of compacting energy of an image signal.",
+      "marks": 10,
+      "type": "Long",
+      "answer": "**Energy Compaction**: In most natural images, the 'useful' information is low-frequency (smooth variations). The high-frequency noise is sparse.\n\n*   **DFT Result**: When you transform an image, huge values appear at the corners (Low Freq can be centered). Most high-freq coefficients are near zero.\n*   **Compression**: You can discard 80% of the high-freq coefficients and inverse transform. The image looks almost matching.\n*   *Note*: DCT (Discrete Cosine Transform) is actually BETTER at this (used in JPEG) because it avoids boundary artifacts, but DFT illustrates the principle well."
+    },
+    {
+      "id": "mq_c_3",
+      "question": "Explain SIFT advantages and disadvantages.",
+      "marks": 10,
+      "type": "Long",
+      "answer": "**Advantages**:\n1.  **Scale Invariant**: Matches objects regardless of size (Zoom).\n2.  **Rotation Invariant**: Matches objects even if rotated.\n3.  **Robust**: Highly distinctive. Can match with partial occlusion or noise.\n\n**Disadvantages**:\n1.  **Slow**: Heavy mathematical operations (Gaussian difference, Vector normalization). Not real-time on old hardware.\n2.  **Patented**: (Historically) Was patented by UBC, limiting commercial use (Expired 2020).\n3.  **Blur**: Fails on images with motion blur."
+    },
+    {
+      "id": "mq_c_4",
+      "question": "Compare various threshold region-based techniques.",
+      "marks": 10,
+      "type": "Long",
+      "answer": "**1. Global Thresholding**: $g(x,y) = 1$ if $f(x,y) > T$ else $0$.\n*   Simple/Fast. Fails if lighting is uneven (shadows).\n\n**2. Otsu's Method**: Automatically finds the *Optimal* Global $T$ by maximizing the variance between the two classes (Black vs White).\n\n**3. Adaptive Thresholding**: Calculates $T$ locally for every small window (e.g., mean of $7 \\times 7$ block).\n*   Perfect for scanning documents with shadow gradients. Slower.\n\n**4. Variable Thresholding**: $T$ depends on a properties like local Standard Deviation."
+    },
+    {
+      "id": "mq_c_5",
+      "question": "Define Voting technique? Explain Hough Transform algorithm.",
+      "marks": 10,
+      "type": "Long",
+      "answer": "**Voting**: A technique where local features 'vote' for a global model parameter. The parameter with maximum votes wins.\n\n**Hough Transform (for Lines)**:\n1.  **Edge Detect**: Run Canny to get edge pixels.\n2.  **Parameter Space**: Define a 2D array (Accumulator) for $(\\rho, \\theta)$. Initialize to 0.\n3.  **Vote**: For every edge pixel $(x, y)$, calculate $\\rho = x \\cos \\theta + y \\sin \\theta$ for all $\\theta$ (0 to 180). Increment the array cell $[\\rho, \\theta]$.\n4.  **Peak Finding**: Find cells with value > Threshold. These $(\\rho, \\theta)$ pairs are the lines in the image."
+    },
+    {
+      "id": "mq_d_1",
+      "question": "Discuss a case study on facial surveillance systems (e.g., in Airports).",
+      "marks": 12,
+      "type": "Very Long",
+      "answer": "**Context**: Airports use facial recognition to match passengers against a Watchlist.\n\n**Pipeline**:\n1.  **Detection**: Viola-Jones or MTCNN finds faces in the crowd video feed.\n2.  **Alignment**: Warps the face so eyes are horizontal.\n3.  **Feature Extraction**: Deep Learning (ArcFace/FaceNet) extracts a 512-d vector.\n4.  **Matching**: Compare vector distance to the Database of criminals.\n\n**Challenges**:\n*   **Pose**: People look down/away.\n*   **Occlusion**: Masks, sunglasses.\n*   **Bias**: Performance varies across demographics."
+    },
+    {
+      "id": "mq_d_2",
+      "question": "Explain the following: a. Image segmentation b. Hough transformation c. Global feature extraction d. Local feature extraction.",
+      "marks": 12,
+      "type": "Very Long",
+      "answer": "**a. Image Segmentation**: Dividing image into parts (Background vs Object). Essential for understanding *shape*.\n**b. Hough Transformation**: Voting mechanism to find geometric shapes (Lines, Circles) in edge maps. Robust to noise/gaps.\n**c. Global Feature Extraction**: Describing the *whole image* with one vector (e.g., Color Histogram). Good for scene classification (\"Beach\" vs \"Forest\"), bad for object detection.\n**d. Local Feature Extraction**: Describing *specific points* (e.g., SIFT at a corner). Good for object detection (\"Find *this* book cover in the scene\")."
+    },
+    {
+      "id": "mq_d_3",
+      "question": "Construct a sample scale-space at a given scale representing a scene. Describe all the elements of such scene using terms native to scale-space representation.",
+      "marks": 12,
+      "type": "Very Long",
+      "answer": "**Scale-Space Representation**: $L(x, y, \\sigma) = G(x, y, \\sigma) * I(x, y)$.\n\n**Scenario**: A scene with a **fine texture** (grass) and a **large object** (Barn).\n\n**Elements**:\n1.  **Scale ($\\sigma$)**: The level of blur. \n    *   **Small $\\sigma$**: We see individual blades of grass (High frequency details).\n    *   **Large $\\sigma$**: The grass blurs into a uniform green patch. Only the Barn's outline remains.\n2.  **Octave**: A doubling of $\\sigma$. SIFT builds octaves to handle huge scale changes.\n3.  **Extrema detection**: We look for points that are bright/dark compared to neighbors in $(x,y)$ AND neighbors in $\\sigma$ (scale). These are the Keypoints."
+    }
   ]
 }
