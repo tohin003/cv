@@ -1,34 +1,4 @@
-import React, { useState, useMemo } from 'react';
-import { motion } from 'framer-motion';
-import { Search, BookOpen, PenTool } from 'lucide-react';
-import studyData from '../data/study_data.json';
-import MermaidDiagram from '../components/MermaidDiagram';
-
-const SimpleMarkdown = ({ text }) => {
-    if (!text) return null;
-
-    // Split by newlines first
-    const lines = text.split('\n');
-
-    return (
-        <div className="space-y-1">
-            {lines.map((line, i) => {
-                // A very basic parser for **bold**
-                const parts = line.split(/(\*\*.*?\*\*)/g);
-                return (
-                    <div key={i} className="min-h-[1.5em]">
-                        {parts.map((part, j) => {
-                            if (part.startsWith('**') && part.endsWith('**')) {
-                                return <strong key={j} className="text-emerald-300">{part.slice(2, -2)}</strong>;
-                            }
-                            return <span key={j}>{part}</span>;
-                        })}
-                    </div>
-                );
-            })}
-        </div>
-    );
-};
+import MathText from '../components/MathText';
 
 export default function MasterPYQView() {
     const [searchTerm, setSearchTerm] = useState('');
@@ -118,8 +88,8 @@ export default function MasterPYQView() {
                                         <div className="bg-slate-900/50 rounded-lg p-4 border border-slate-800">
                                             <div className="flex items-start gap-3">
                                                 <PenTool size={18} className="text-slate-500 mt-1 shrink-0" />
-                                                <div className="text-slate-300 text-sm leading-relaxed w-full">
-                                                    <SimpleMarkdown text={q.answer} />
+                                                <div className="text-slate-300 text-sm w-full">
+                                                    <MathText text={q.answer} />
                                                 </div>
                                             </div>
                                         </div>

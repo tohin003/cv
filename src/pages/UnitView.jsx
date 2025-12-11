@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, Lightbulb, BookOpen, ChevronDown, ChevronUp, Star } from 'lucide-react';
 import studyData from '../data/study_data.json';
 import MermaidDiagram from '../components/MermaidDiagram';
+import MathText from '../components/MathText';
 
 export default function UnitView() {
     const { id } = useParams();
@@ -14,18 +15,6 @@ export default function UnitView() {
 
     const toggleExpand = (idx) => {
         setExpanded(prev => ({ ...prev, [idx]: !prev[idx] }));
-    };
-
-    // Helper to highlight key terms
-    const renderContentWithHighlights = (text) => {
-        if (!text) return null;
-        const parts = text.split(/(\*\*.*?\*\*)/g);
-        return parts.map((part, i) => {
-            if (part.startsWith('**') && part.endsWith('**')) {
-                return <span key={i} className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">{part.slice(2, -2)}</span>;
-            }
-            return part;
-        });
     };
 
     return (
@@ -56,8 +45,8 @@ export default function UnitView() {
 
                         <div className="p-6">
                             {/* Main Content with "Pop" highlights */}
-                            <div className="prose prose-invert max-w-none text-slate-300 text-lg leading-relaxed whitespace-pre-line mb-6">
-                                {renderContentWithHighlights(topic.content)}
+                            <div className="text-slate-300 text-lg leading-relaxed mb-6">
+                                <MathText text={topic.content} />
                             </div>
 
                             {topic.diagram && (
@@ -72,7 +61,9 @@ export default function UnitView() {
                                     <h3 className="text-blue-400 font-bold flex items-center gap-2 mb-2 text-lg">
                                         <Lightbulb size={24} className="fill-blue-500/20" /> Analogy to Remember
                                     </h3>
-                                    <p className="text-blue-100 italic text-lg">{topic.analogy}</p>
+                                    <div className="text-blue-100 italic text-lg">
+                                        <MathText text={topic.analogy} />
+                                    </div>
                                 </div>
                             )}
 
@@ -99,8 +90,8 @@ export default function UnitView() {
                                                 className="overflow-hidden"
                                             >
                                                 <div className="p-4 pt-6 text-slate-300 space-y-4 bg-slate-900/30 rounded-b-lg border-x border-b border-slate-800">
-                                                    <div className="prose prose-invert max-w-none whitespace-pre-line">
-                                                        {renderContentWithHighlights(topic.extended_content)}
+                                                    <div>
+                                                        <MathText text={topic.extended_content} />
                                                     </div>
                                                 </div>
                                             </motion.div>

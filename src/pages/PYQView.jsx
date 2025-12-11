@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { FileCheck, PenTool } from 'lucide-react';
 import studyData from '../data/study_data.json';
 import MermaidDiagram from '../components/MermaidDiagram';
+import MathText from '../components/MathText';
 
 export default function PYQView() {
     // Flatten all PYQs
@@ -54,9 +55,9 @@ export default function PYQView() {
                             <div className="bg-slate-900/50 rounded-lg p-4 border border-slate-800">
                                 <div className="flex items-start gap-3">
                                     <PenTool size={18} className="text-slate-500 mt-1 shrink-0" />
-                                    <div className="text-slate-300 whitespace-pre-line">
+                                    <div className="text-slate-300 w-full text-sm">
                                         <span className="font-semibold text-emerald-400 block mb-1">Solution:</span>
-                                        {q.answer}
+                                        <MathText text={q.answer} />
                                     </div>
                                 </div>
                             </div>
