@@ -72,7 +72,7 @@ export default function MasterPYQView() {
                             </div>
 
                             <div className="grid gap-6">
-                                {questions.map((q) => (
+                                {questions.map((q, index) => (
                                     <motion.div
                                         initial={{ y: 20, opacity: 0 }}
                                         whileInView={{ y: 0, opacity: 1 }}
@@ -81,7 +81,10 @@ export default function MasterPYQView() {
                                         className={`bg-surface border border-slate-700 rounded-xl p-6 relative overflow-hidden active:scale-[0.99] transition-transform ${section.border}`}
                                     >
                                         <div className="flex justify-between items-start mb-4 gap-4">
-                                            <h3 className="text-lg font-medium text-white">{q.question}</h3>
+                                            <h3 className="text-lg font-medium text-white">
+                                                <span className="text-emerald-400 font-bold mr-2">{index + 1}.</span>
+                                                {q.question}
+                                            </h3>
                                         </div>
 
                                         {q.diagram && (
